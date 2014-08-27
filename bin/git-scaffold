@@ -1,0 +1,17 @@
+#!/bin/sh
+
+workdir=${1:-.}
+git init "$workdir"
+cd "$workdir"
+
+[ -e .editorconfig ] || cat <<EOF
+root = true
+
+[*]
+charset = utf-8
+EOF
+
+api=http://www.gitignore.io/api
+ignore_list=linux,osx,windows,emacs,vim
+
+[ -e .gitignore ] || curl -sSL "$api/${ignore_list}" > .gitignore
